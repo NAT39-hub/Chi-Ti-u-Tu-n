@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Quản Lý Chi Tiêu</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0056b3; }
+        .total-box { background: #e9ecef; padding: 15px; border-radius: 6px; text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold; }
+        .total-amount { color: #dc3545; font-size: 24px; }
+        ul { list-style-type: none; padding: 0; margin-top: 20px; }
+        li { background: #f8f9fa; margin-bottom: 8px; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>💰 Quản Lý Chi Tiêu</h2>
+        <input type="text" id="itemName" placeholder="Tên khoản chi (VD: Ăn sáng, Đổ xăng...)">
+        <input type="number" id="itemPrice" placeholder="Số tiền (VD: 50000)">
+        <button onclick="addItem()">+ Thêm khoản chi</button>
+
+        <div class="total-box">
+            Tổng đã chi:<br>
+            <span class="total-amount" id="totalDisplay">0</span> VNĐ
+        </div>
+
+        <ul id="expenseList"></ul>
+    </div>
+
+    <script>
+        let total = 0;
+        function addItem() {
+            const name = document.getElementById('itemName').value;
+            const price = parseInt(document.getElementById('itemPrice').value);
+
+            if(name === '' || isNaN(price) || price <= 0) {
+                alert('Vui lòng nhập đúng tên và số tiền!');
+                return;
+            }
+
+            // Thêm vào danh sách hiển thị
+            const list = document.getElementById('expenseList');
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${name}</span> <b>${price.toLocaleString('vi-VN')} đ</b>`;
+            list.appendChild(li);
+
+            // Cộng tổng tiền
+            total += price;
+            document.getElementById('totalDisplay').innerText = total.toLocaleString('vi-VN');
+
+            // Xóa ô nhập liệu để nhập cái mới
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+        }
+    </script>
+</body>
+</html>
